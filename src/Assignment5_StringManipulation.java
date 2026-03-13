@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Assignment5_StringManipulation {
@@ -45,92 +46,134 @@ public class Assignment5_StringManipulation {
         }
     }
 
-    // ===================== TASK 1 =====================
     private static void task1(Scanner scanner) {
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        // TODO: Подсчитать количество гласных (a, e, i, o, u)
         int count = 0;
+        String lowerInput = input.toLowerCase();
+
+        for (char c : lowerInput.toCharArray()) {
+            if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
+                count++;
+            }
+        }
 
         System.out.println("Number of vowels: " + count);
     }
 
-    // ===================== TASK 2 =====================
     private static void task2(Scanner scanner) {
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        // TODO: Вывести строку в обратном порядке
-        String reversed = "";
+        String reversed = new StringBuilder(input).reverse().toString();
 
         System.out.println(reversed);
     }
 
-    // ===================== TASK 3 =====================
     private static void task3(Scanner scanner) {
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        // TODO: Проверить, является ли строка палиндромом (игнорировать регистр)
-        boolean isPalindrome = false;
+        String cleaned = input.toLowerCase().replaceAll("[^a-z0-9]", "");
+        String reversed = new StringBuilder(cleaned).reverse().toString();
+        boolean isPalindrome = cleaned.equals(reversed);
 
         System.out.println(isPalindrome ? "Yes" : "No");
     }
 
-    // ===================== TASK 4 =====================
     private static void task4(Scanner scanner) {
         System.out.print("Enter a sentence: ");
         String sentence = scanner.nextLine();
 
-        // TODO: Подсчитать количество слов в предложении
         int wordCount = 0;
+        if (sentence != null && !sentence.trim().isEmpty()) {
+            wordCount = sentence.trim().split("\\s+").length;
+        }
 
         System.out.println("Number of words: " + wordCount);
     }
 
-    // ===================== TASK 5 =====================
     private static void task5(Scanner scanner) {
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        // TODO: Удалить все пробелы из строки
-        String noSpaces = "";
+        String noSpaces = input.replaceAll(" ", "");
 
         System.out.println(noSpaces);
     }
 
-    // ===================== TASK 6 =====================
     private static void task6(Scanner scanner) {
         System.out.print("Enter a sentence: ");
         String sentence = scanner.nextLine();
 
-        // TODO: Преобразовать первую букву каждого слова в заглавную
-        String result = "";
+        String[] words = sentence.split(" ");
+        StringBuilder result = new StringBuilder();
 
-        System.out.println(result);
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                result.append(Character.toUpperCase(word.charAt(0)));
+                if (word.length() > 1) {
+                    result.append(word.substring(1).toLowerCase());
+                }
+                result.append(" ");
+            }
+        }
+        System.out.println(result.toString().trim());
     }
 
-    // ===================== TASK 7 =====================
     private static void task7(Scanner scanner) {
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        // TODO: Найти символ, который встречается чаще всего
         char mostFrequent = ' ';
+        
+        if (input.isEmpty()) {
+            System.out.println("The most frequent character is: (empty string)");
+            return;
+        }
+
+        int maxCount = 0;
+        
+        for (int i = 0; i < input.length(); i++) {
+            char current = input.charAt(i);
+            int count = 0;
+            
+            for (int j = 0; j < input.length(); j++) {
+                if (input.charAt(j) == current) {
+                    count++;
+                }
+            }
+            
+            if (count > maxCount) {
+                maxCount = count;
+                mostFrequent = current;
+            }
+        }
 
         System.out.println("The most frequent character is: " + mostFrequent);
     }
 
-    // ===================== TASK 8 =====================
     private static void task8(Scanner scanner) {
         System.out.print("Enter first string: ");
         String str1 = scanner.nextLine();
         System.out.print("Enter second string: ");
         String str2 = scanner.nextLine();
 
-        // TODO: Проверить, являются ли две строки анаграммами (игнорировать пробелы и регистр)
+        String s1 = str1.replaceAll("\\s", "").toLowerCase();
+        String s2 = str2.replaceAll("\\s", "").toLowerCase();
+
         boolean areAnagrams = false;
+
+        if (s1.length() == s2.length()) {
+            char[] arr1 = s1.toCharArray();
+            char[] arr2 = s2.toCharArray();
+            
+            Arrays.sort(arr1);
+            Arrays.sort(arr2);
+            
+            areAnagrams = Arrays.equals(arr1, arr2);
+        }
 
         System.out.println(areAnagrams ? "Yes" : "No");
     }
